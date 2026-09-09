@@ -2485,9 +2485,11 @@ h3 { font-size:19px !important; }
 
 /* ==== STRIP-CHROME: hide showcase wrapper for PPT screenshots ==== */
 .topbar, .canvas-label { display:none !important; }
-.studio { max-width:none !important; margin:0 !important; padding:48px 16px !important; gap:0 !important; }
-html, body { background:var(--white) !important; }
-.canvas-wrap.mobile .phone { margin:0 auto !important; }
+html, body { background:var(--white) !important; height:100% !important; overflow:hidden !important; }
+.studio { max-width:none !important; margin:0 !important; padding:16px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile { width:100% !important; display:flex !important; justify-content:center !important; }
+.canvas-wrap.mobile .phone { margin:0 auto !important; height:calc(100vh - 32px) !important; max-height:calc(100vh - 32px) !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow-y:auto !important; }
 
 </style>
 </head>
