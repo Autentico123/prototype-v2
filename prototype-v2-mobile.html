@@ -4097,11 +4097,17 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var wrap = document.querySelector(".phone-screen");
     var active = wrap ? wrap.querySelector(".screen.is-active") : null;
     if (!wrap || !active) return;
+    // Clear stale fit on inactive screens so returning never reuses old scale.
+    wrap.querySelectorAll(".screen").forEach(function (sc) {
+      if (sc !== active) { sc.style.transform = ""; sc.style.width = ""; }
+    });
     // No tabbar on auth screens -> no bottom reserve there.
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
     var reserve = tabHidden ? 0 : 78;
+    // Reset before measuring: stale width inflates offsetWidth and skews shiftX.
     active.style.transform = "";
+    active.style.width = "";
     var availH = wrap.clientHeight - reserve;
     var availW = wrap.clientWidth;
     var needH = active.scrollHeight;
@@ -4109,9 +4115,9 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     if (needH > availH && needH > 0) {
       var s = Math.min(availH / needH, availW / needW, 1);
       s = Math.max(s, 0.3);
-      var shiftX = (availW - active.offsetWidth * s) / 2;
-      active.style.transform = "translateX(" + shiftX + "px) scale(" + s + ")";
+      // Width compensation makes scaled width exactly availW, so no shiftX needed.
       active.style.width = availW / s + "px";
+      active.style.transform = "scale(" + s + ")";
     } else {
       active.style.width = "";
     }
