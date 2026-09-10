@@ -551,11 +551,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 .modal-overlay.is-open { opacity: 1; visibility: visible; }
 .modal-sheet {
-  width: 88%; max-height: 78vh;
+  width: 88%; max-height: 60vh;
   background: var(--white);
   border-radius: var(--radius-modal);
   border: 2px solid var(--forest);
-  padding: 8px 20px 20px;
+  padding: 6px 16px 14px;
   overflow-y: auto;
   scrollbar-width: none;        /* Firefox: hide scrollbar */
   -ms-overflow-style: none;     /* IE/Edge */
@@ -566,19 +566,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 /* WebKit (Chrome/Safari): hide scrollbar but keep scroll */
 .modal-sheet::-webkit-scrollbar { width: 0; height: 0; display: none; }
 .modal-overlay.is-open .modal-sheet { transform: translateY(0) scale(1); }
-.modal-grip { width: 44px; height: 5px; background: var(--mist); border-radius: 999px; margin: 0 auto 10px; }
-.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.modal-head h2 { font-family: var(--font-display); font-size: 20px; color: var(--forest-deep); }
+.modal-grip { width: 36px; height: 4px; background: var(--mist); border-radius: 999px; margin: 0 auto 6px; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.modal-head h2 { font-family: var(--font-display); font-size: 17px; color: var(--forest-deep); }
 .modal-close {
-  background: none; border: none; font-size: 20px; color: var(--subtle); cursor: pointer; padding: 4px;
+  background: none; border: none; font-size: 18px; color: var(--subtle); cursor: pointer; padding: 2px;
 }
-.modal-body { display: flex; flex-direction: column; gap: 14px; }
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field > span { font-size: 12px; font-weight: 700; color: var(--forest-deep); }
+.modal-body { display: flex; flex-direction: column; gap: 10px; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field > span { font-size: 11px; font-weight: 700; color: var(--forest-deep); }
 .field em { font-weight: 400; color: var(--subtle); font-style: normal; }
 .field input, .field select, .field textarea {
-  font-family: var(--font-body); font-size: 14px; color: var(--forest-deep);
-  border: 2px solid var(--forest); border-radius: var(--radius-base); padding: 10px 14px;
+  font-family: var(--font-body); font-size: 13px; color: var(--forest-deep);
+  border: 1.5px solid var(--forest); border-radius: var(--radius-base); padding: 8px 12px;
   background: var(--white); outline: none;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--forest); }
@@ -705,14 +705,14 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .btn-danger:hover { background: var(--danger-light); }
 
 /* ---- Delete confirmation modal ---- */
-.modal-sheet-sm { max-width: 320px; margin-left: auto; margin-right: auto; text-align: center; }
-.delete-body { padding: 8px 4px 4px; }
-.delete-ico { font-size: 40px; display: block; margin-bottom: 8px; }
-.delete-body h2 { font-family: var(--font-display); font-size: 20px; color: var(--forest-deep); margin-bottom: 8px; }
-.delete-body p { font-size: 13px; color: var(--stone); line-height: 1.5; }
+.modal-sheet-sm { max-width: 280px; margin-left: auto; margin-right: auto; text-align: center; }
+.delete-body { padding: 4px 4px 2px; }
+.delete-ico { font-size: 30px; display: block; margin-bottom: 4px; }
+.delete-body h2 { font-family: var(--font-display); font-size: 16px; color: var(--forest-deep); margin-bottom: 4px; }
+.delete-body p { font-size: 12px; color: var(--stone); line-height: 1.4; }
 .delete-body b { color: var(--forest-deep); }
-.delete-actions { display: flex; gap: 10px; margin-top: 18px; }
-.delete-actions .btn { flex: 1; }
+.delete-actions { display: flex; gap: 8px; margin-top: 12px; }
+.delete-actions .btn { flex: 1; font-size: 12px !important; padding: 8px !important; }
 
 /* ---- Buttons ---- */
 .btn {
@@ -1597,26 +1597,26 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 #farmModal .field input, #farmModal .field select, #farmModal .field textarea { padding: 6px 12px; }
 #farmModal .field span { margin-bottom: 2px; }
 #farmModal .modal-head { margin-bottom: 6px; }
-#croptypeModal .modal-sheet { width: 680px; max-width: 92%; max-height: 88%; }
-#croptypeEditModal .modal-sheet { width: 680px; max-width: 92%; max-height: 88%; margin-left: auto; margin-right: auto; }
-.croptype-intro { font-size: 13px; color: var(--stone); line-height: 1.5; margin-bottom: 14px; }
-.croptype-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+#croptypeModal .modal-sheet { width: 88%; max-width: 92%; max-height: 55vh; }
+#croptypeEditModal .modal-sheet { width: 88%; max-width: 92%; max-height: 55vh; margin-left: auto; margin-right: auto; }
+.croptype-intro { font-size: 11px; color: var(--stone); line-height: 1.4; margin-bottom: 8px; }
+.croptype-list { list-style: none; display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
 .croptype-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 12px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px;
   background: transparent;
   border: 1px solid var(--forest);
   border-radius: var(--radius-base);
 }
 .ct-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.ct-main b { font-size: 14px; color: var(--forest); }
-.ct-sci { font-size: 11px; font-style: italic; color: var(--forest); }
-.ct-days, .ct-stages { font-size: 11px; color: var(--forest); background: transparent; border: 1px solid var(--forest); padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
-.ct-actions { display: flex; gap: 4px; }
+.ct-main b { font-size: 12px; color: var(--forest); }
+.ct-sci { font-size: 9px; font-style: italic; color: var(--forest); }
+.ct-days, .ct-stages { font-size: 9px; color: var(--forest); background: transparent; border: 1px solid var(--forest); padding: 2px 6px; border-radius: 999px; white-space: nowrap; }
+.ct-actions { display: flex; gap: 2px; }
 .btn-icon {
   border: none; background: transparent; cursor: pointer;
-  font-size: 15px; line-height: 1;
-  width: 32px; height: 32px; border-radius: 8px;
+  font-size: 13px; line-height: 1;
+  width: 26px; height: 26px; border-radius: 6px;
   display: inline-flex; align-items: center; justify-content: center;
   touch-action: manipulation;
 }
