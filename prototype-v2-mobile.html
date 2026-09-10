@@ -4111,13 +4111,10 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
     var reserve = tabHidden ? 0 : 78;
-    // Reset before measuring: stale zoom/width shrinks measure, fakes hug, leaves gap.
+    // Reset before measuring: stale width inflates offsetWidth and skews shiftX.
     active.style.transform = "";
     active.style.width = "";
     active.style.zoom = "";
-    wrap.style.height = "";
-    var phone0 = document.querySelector(".canvas-wrap.mobile .phone");
-    if (phone0) phone0.style.height = "";
     var phone = document.querySelector(".canvas-wrap.mobile .phone");
     var availH = window.innerHeight - 118 - reserve; /* viewport - chrome - tabbar */
     var availW = wrap.clientWidth;

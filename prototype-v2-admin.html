@@ -2455,7 +2455,7 @@ html, body { background:var(--dew) !important; height:100% !important; overflow:
 .stat-grid { gap:12px !important; margin-bottom:14px !important; }
 .stat-card { padding:14px !important; }
 .stat-card strong { font-size:30px !important; margin:4px 0 0 !important; }
-.admin-grid { gap:12px !important; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)) !important; }
+.admin-grid { gap:12px !important; }
 .panel { padding:14px !important; }
 .panel-title { margin-bottom:10px !important; }
 /* KB screen: compress stacked sections (rag strip + stats + toolbar + cards). */
@@ -4263,7 +4263,6 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
     if (empty) empty.classList.toggle("is-hidden", visible > 0);
     var count = document.querySelector("[data-gazette-count] b");
     if (count) count.textContent = visible;
-    fitAdminScreen();
   }
 
   // Audit Logs (12.2–12.5): filter rows by date range, admin, event type, and search.
@@ -4290,7 +4289,6 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
     if (empty) empty.classList.toggle("is-hidden", visible > 0);
     var count = document.getElementById("auditCount");
     if (count) count.textContent = "Showing " + visible + " of 1,248 entries";
-    fitAdminScreen();
   }
 
   // Farm weather selector (4.8): dropdown changes the active farm's weather.
