@@ -2532,7 +2532,17 @@ body.ppt-mode { background:#fff !important; min-height:100vh !important; display
 body.ppt-mode .topbar, body.ppt-mode .canvas-label, body.ppt-mode .footnote { display:none !important; }
 body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background:var(--dew) !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
 body.ppt-mode .canvas-wrap.mobile { height:1080px !important; max-height:1080px !important; width:1920px !important; }
-body.ppt-mode .canvas-wrap.mobile .phone { height:1024px !important; max-height:1024px !important; }
+body.ppt-mode .canvas-wrap.mobile .phone { width:400px !important; max-width:400px !important; height:1024px !important; max-height:1024px !important; }
+/* No tabbar on auth screens -> drop bottom reserve so login/register/forgot reach bottom. */
+.canvas-wrap.mobile .phone-screen.no-tab { padding-bottom:0 !important; }
+/* PPT slideshow: tighten AI screen so actions reach bottom without heavy scaling. */
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-hero { padding:8px 10px !important; margin-bottom:6px !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-note { display:none !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-recommend { padding:8px 10px !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-recommend + .ai-recommend { margin-top:6px !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-text { margin:4px 0 !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .ai-harvest { margin:6px 0 !important; padding:8px !important; }
+body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !important; }
 
 </style>
 </head>
@@ -4087,8 +4097,12 @@ body.ppt-mode .canvas-wrap.mobile .phone { height:1024px !important; max-height:
     var wrap = document.querySelector(".phone-screen");
     var active = wrap ? wrap.querySelector(".screen.is-active") : null;
     if (!wrap || !active) return;
+    // No tabbar on auth screens -> no bottom reserve there.
+    var tabHidden = !document.querySelector("[data-tabbar].is-visible");
+    wrap.classList.toggle("no-tab", tabHidden);
+    var reserve = tabHidden ? 0 : 78;
     active.style.transform = "";
-    var availH = wrap.clientHeight - 78; /* reserve tabbar space */
+    var availH = wrap.clientHeight - reserve;
     var availW = wrap.clientWidth;
     var needH = active.scrollHeight;
     var needW = active.scrollWidth || active.offsetWidth;
