@@ -4263,6 +4263,7 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
     if (empty) empty.classList.toggle("is-hidden", visible > 0);
     var count = document.querySelector("[data-gazette-count] b");
     if (count) count.textContent = visible;
+    fitAdminScreen();
   }
 
   // Audit Logs (12.2–12.5): filter rows by date range, admin, event type, and search.
@@ -4289,6 +4290,7 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
     if (empty) empty.classList.toggle("is-hidden", visible > 0);
     var count = document.getElementById("auditCount");
     if (count) count.textContent = "Showing " + visible + " of 1,248 entries";
+    fitAdminScreen();
   }
 
   // Farm weather selector (4.8): dropdown changes the active farm's weather.
