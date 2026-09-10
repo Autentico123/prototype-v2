@@ -2443,40 +2443,43 @@ h3 { font-size:19px !important; }
 
 /* ==== FIT MODE: console frame kept, single screen, fits viewport ==== */
 .topbar, .canvas-label { display:none !important; }
-html, body { background:var(--dew) !important; height:100% !important; overflow:auto !important; }
-.studio { max-width:none !important; margin:0 !important; padding:0 !important; gap:0 !important; min-height:100vh !important; box-sizing:border-box !important; }
-.canvas-wrap.admin { width:100% !important; min-height:100vh !important; }
-.admin-canvas { width:100% !important; min-height:100vh !important; display:flex !important; flex-direction:column !important; overflow:visible !important; }
-.admin-main, .admin-screen.is-active { min-height:0 !important; overflow-y:auto !important; scrollbar-width:none !important; }
-.admin-screen.is-active { flex:1 !important; }
-.admin-screen.is-active .admin-main { flex:1 !important; width:100% !important; min-width:0 !important; padding:20px 28px 32px !important; }
-.admin-topbar { margin-bottom:14px !important; }
-.stat-grid { gap:12px !important; margin-bottom:14px !important; }
-.stat-card { padding:14px !important; }
-.stat-card strong { font-size:28px !important; margin:2px 0 0 !important; }
-.stat-emoji { font-size:18px !important; }
-.stat-card .stat-emoji .ic { width:22px !important; height:22px !important; }
-.admin-grid { gap:12px !important; }
-.panel { padding:14px !important; }
-.panel-title { font-size:14px !important; margin-bottom:10px !important; }
-.activity { padding:4px 0 !important; }
-.donut { width:90px !important; height:90px !important; margin-bottom:8px !important; }
-.dist-row { margin-bottom:8px !important; }
-.legend { font-size:11px !important; }
-.risk-meter { height:10px !important; }
-/* ==== FIT-CONTENT: shrink active screen so all content fits, no inner scroll ==== */
+html, body { background:var(--dew) !important; height:100% !important; overflow:hidden !important; }
+.studio { max-width:none !important; margin:0 !important; padding:0 !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; box-sizing:border-box !important; }
+.canvas-wrap.admin { width:100% !important; height:100% !important; max-height:100% !important; }
+.admin-canvas { width:100% !important; height:100% !important; display:flex !important; flex-direction:column !important; overflow:hidden !important; }
+.admin-screen.is-active { display:flex !important; flex:1 !important; min-height:0 !important; overflow:hidden !important; }
+.admin-sidebar { flex-shrink:0 !important; }
+.admin-main { flex:1 !important; min-width:0 !important; min-height:0 !important; overflow-y:auto !important; overflow-x:hidden !important; scrollbar-width:none !important; padding:16px 24px 24px !important; }
+.admin-main::-webkit-scrollbar { width:0 !important; height:0 !important; }
+.admin-topbar { margin-bottom:12px !important; }
+.stat-grid { gap:10px !important; margin-bottom:12px !important; }
+.stat-card { padding:10px !important; }
+.stat-card strong { font-size:22px !important; margin:2px 0 0 !important; }
+.stat-emoji { font-size:14px !important; }
+.stat-card .stat-emoji .ic { width:18px !important; height:18px !important; }
+.admin-grid { gap:10px !important; }
+.panel { padding:12px !important; }
+.panel-title { font-size:13px !important; margin-bottom:8px !important; }
+.activity { padding:3px 0 !important; }
+.donut { width:70px !important; height:70px !important; margin-bottom:6px !important; }
+.dist-row { margin-bottom:6px !important; font-size:11px !important; }
+.legend { font-size:10px !important; gap:8px !important; }
+.risk-meter { height:8px !important; }
+.risk-chips { gap:4px !important; }
+.risk-chip { font-size:9px !important; padding:2px 6px !important; }
+/* KB section tighter */
+.kb-rag-grid { gap:8px !important; }
+.kb-rag-tile { padding:8px 10px !important; }
+.kb-rag-tile b { font-size:16px !important; }
+.kb-stats { gap:10px !important; margin-bottom:12px !important; }
+.kb-stat { padding:10px !important; }
+.kb-stat b { font-size:22px !important; }
+.kb-toolbar { gap:8px !important; margin-bottom:10px !important; }
+.kb-card { padding:12px !important; }
+/* ==== FIT-CONTENT ==== */
 .admin-screen.is-active { font-size:12px !important; }
-.admin-screen.is-active h1 { font-size:20px !important; }
-.admin-screen.is-active h2 { font-size:16px !important; }
-@media (max-height:800px) {
-  .admin-screen.is-active { font-size:11px !important; }
-  .admin-screen.is-active h1 { font-size:18px !important; }
-  .admin-screen.is-active h2 { font-size:14px !important; }
-  .stat-card strong { font-size:24px !important; }
-  .stat-card { padding:10px !important; }
-  .panel { padding:10px !important; }
-  .donut { width:70px !important; height:70px !important; }
-}
+.admin-screen.is-active h1 { font-size:18px !important; }
+.admin-screen.is-active h2 { font-size:15px !important; }
 
 /* ==== PPT MODE: fixed 1920x1080 slide stage, scaled to viewport (?ppt=1 or "p") ==== */
 body.ppt-mode { background:#fff !important; min-height:100vh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
