@@ -2489,10 +2489,9 @@ html, body { background:var(--dew) !important; height:100% !important; overflow:
 .studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
 .canvas-wrap.mobile .phone { margin:0 auto !important; width:460px !important; max-width:460px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:100% !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
-.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; display:flex !important; flex-direction:column !important; }
-.canvas-wrap.mobile .phone-screen .ph-brand { flex:none !important; }
-/* ==== AUTO-FIT: active screen fills height; JS shrinks tall screens, pins short ones ==== */
-.canvas-wrap.mobile .phone-screen .screen.is-active { flex:1 1 auto !important; display:flex !important; flex-direction:column !important; width:100% !important; min-height:0 !important; transform-origin:top left !important; }
+.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; }
+/* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
+.canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
 .screen[data-screen="home"].is-active { padding-top:14px !important; padding-left:18px !important; padding-right:18px !important; }
 .screen[data-screen="home"].is-active .home-header { margin-bottom:12px !important; }
@@ -2536,16 +2535,6 @@ body.ppt-mode .canvas-wrap.mobile { height:1080px !important; max-height:1080px 
 body.ppt-mode .canvas-wrap.mobile .phone { width:400px !important; max-width:400px !important; height:1024px !important; max-height:1024px !important; }
 /* No tabbar on auth screens -> drop bottom reserve so login/register/forgot reach bottom. */
 .canvas-wrap.mobile .phone-screen.no-tab { padding-bottom:0 !important; }
-/* Pin closing block to screen bottom on every screen (auth footer, AI actions,
-   crop quick actions). Tall content pushes them down; short content stretches. */
-.screen[data-screen="login"].is-active .auth-footer,
-.screen[data-screen="register"].is-active .auth-footer,
-.screen[data-screen="forgot"].is-active .auth-footer,
-.screen[data-screen="ai"].is-active .ai-actions,
-.screen[data-screen="crop-detail"].is-active .quick-actions { margin-top:auto !important; padding-top:12px !important; }
-.screen[data-screen="login"].is-active .auth-hero,
-.screen[data-screen="register"].is-active .auth-hero,
-.screen[data-screen="forgot"].is-active .auth-hero { flex:none !important; }
 /* PPT slideshow: tighten AI screen so actions reach bottom without heavy scaling. */
 body.ppt-mode .screen[data-screen="ai"].is-active .ai-hero { padding:8px 10px !important; margin-bottom:6px !important; }
 body.ppt-mode .screen[data-screen="ai"].is-active .ai-note { display:none !important; }
@@ -4103,7 +4092,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     fitActiveScreen();
   }
 
-  /* ==== AUTO-FIT: every screen fills phone height; tall screens shrink, short ones stretch ==== */
+  /* ==== AUTO-FIT: scale active screen content to fit phone-screen, no scroll ==== */
   function fitActiveScreen() {
     var wrap = document.querySelector(".phone-screen");
     var active = wrap ? wrap.querySelector(".screen.is-active") : null;
@@ -4112,24 +4101,19 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
     var reserve = tabHidden ? 0 : 78;
-    var brand = wrap.querySelector(".ph-brand");
-    var brandH = (brand && !brand.hidden) ? brand.offsetHeight : 0;
-    var availH = wrap.clientHeight - brandH - reserve;
-    var availW = wrap.clientWidth;
     active.style.transform = "";
-    active.style.width = "";
-    active.style.minHeight = "";
+    var availH = wrap.clientHeight - reserve;
+    var availW = wrap.clientWidth;
     var needH = active.scrollHeight;
     var needW = active.scrollWidth || active.offsetWidth;
     if (needH > availH && needH > 0) {
       var s = Math.min(availH / needH, availW / needW, 1);
       s = Math.max(s, 0.3);
-      active.style.width = (availW / s) + "px";
-      active.style.minHeight = (availH / s) + "px";
       var shiftX = (availW - active.offsetWidth * s) / 2;
       active.style.transform = "translateX(" + shiftX + "px) scale(" + s + ")";
+      active.style.width = availW / s + "px";
     } else {
-      active.style.minHeight = availH + "px";
+      active.style.width = "";
     }
   }
   window.addEventListener("resize", fitActiveScreen);
