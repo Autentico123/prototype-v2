@@ -2441,14 +2441,22 @@ h3 { font-size:19px !important; }
   font-size: 12px; color: var(--leaf); margin: 20px 0 0;
 }
 
-/* ==== PRESENT MODE: all screens visible, no scroll ==== */
+/* ==== FIT MODE: console frame kept, single screen, fits viewport, no page scroll ==== */
 .topbar, .canvas-label { display:none !important; }
-html, body { background:var(--white) !important; height:auto !important; overflow:visible !important; }
-.studio { max-width:none !important; margin:0 !important; padding:0 !important; gap:0 !important; height:auto !important; max-height:none !important; overflow:visible !important; display:block !important; box-sizing:border-box !important; }
-.canvas-wrap.admin { height:auto !important; max-height:none !important; display:block !important; }
-.admin-canvas { min-height:0 !important; max-height:none !important; overflow:visible !important; display:block !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; }
-.admin-canvas .admin-screen { display:flex !important; border-bottom:8px solid var(--dew) !important; animation:none !important; min-height:0 !important; overflow:visible !important; }
-.admin-navbar { display:none !important; }
+html, body { background:var(--dew) !important; height:100% !important; overflow:hidden !important; }
+.studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; box-sizing:border-box !important; }
+.canvas-wrap.admin { height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; }
+.admin-canvas { height:100% !important; max-height:100% !important; min-height:0 !important; overflow:hidden !important; display:flex !important; flex-direction:column !important; }
+.admin-main, .admin-screen.is-active { min-height:0 !important; overflow-y:auto !important; scrollbar-width:none !important; }
+/* ==== FIT-CONTENT: shrink active screen so all content fits, no inner scroll ==== */
+.admin-screen.is-active { font-size:13px !important; }
+.admin-screen.is-active h1 { font-size:22px !important; }
+.admin-screen.is-active h2 { font-size:17px !important; }
+@media (max-height:800px) {
+  .admin-screen.is-active { font-size:12px !important; }
+  .admin-screen.is-active h1 { font-size:19px !important; }
+  .admin-screen.is-active h2 { font-size:15px !important; }
+}
 
 </style>
 </head>

@@ -2483,17 +2483,49 @@ h3 { font-size:19px !important; }
   font-size: 12px; color: var(--leaf); margin: 20px 0 0;
 }
 
-/* ==== PRESENT MODE: all screens visible, scaled to fit viewport, no scroll ==== */
+/* ==== FIT MODE: phone frame kept, single screen, fits viewport, no page scroll ==== */
 .topbar, .canvas-label { display:none !important; }
-html, body { background:var(--white) !important; height:auto !important; overflow:visible !important; }
-.studio { max-width:none !important; margin:0 !important; padding:0 !important; gap:0 !important; height:auto !important; max-height:none !important; overflow:visible !important; display:block !important; box-sizing:border-box !important; }
-.canvas-wrap.mobile { width:100% !important; display:block !important; }
-.canvas-wrap.mobile .phone { margin:0 !important; width:100% !important; max-width:none !important; background:transparent !important; border:0 !important; border-radius:0 !important; padding:0 !important; box-shadow:none !important; height:auto !important; max-height:none !important; display:block !important; box-sizing:border-box !important; overflow:visible !important; }
-.canvas-wrap.mobile .phone::before, .canvas-wrap.mobile .phone::after { display:none !important; }
-.canvas-wrap.mobile .phone-notch { display:none !important; }
-.canvas-wrap.mobile .phone-screen { height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; border:0 !important; border-radius:0 !important; display:block !important; }
-.phone-screen .screen { display:block !important; border-bottom:8px solid var(--dew) !important; animation:none !important; }
-.ph-brand, .tabbar, .quicklaunch, .qa-menu { display:none !important; }
+html, body { background:var(--dew) !important; height:100% !important; overflow:hidden !important; }
+.studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
+.canvas-wrap.mobile .phone { margin:0 auto !important; width:460px !important; max-width:460px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:100% !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; }
+/* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
+.canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
+/* ==== HOME: match standard screen rhythm (14/18px) ==== */
+.screen[data-screen="home"].is-active { padding-top:14px !important; padding-left:18px !important; padding-right:18px !important; }
+.screen[data-screen="home"].is-active .home-header { margin-bottom:12px !important; }
+.screen[data-screen="home"].is-active .home-scope { margin-bottom:10px !important; }
+.screen[data-screen="home"].is-active .farm-switch { margin-bottom:12px !important; padding:10px 14px !important; min-height:46px !important; }
+.screen[data-screen="home"].is-active .today-report { padding:14px 14px 12px !important; margin-bottom:12px !important; }
+.screen[data-screen="home"].is-active .tr-main { margin:12px 0 8px !important; gap:14px !important; }
+.screen[data-screen="home"].is-active .tr-temp { font-size:52px !important; }
+.screen[data-screen="home"].is-active .tr-emoji { font-size:30px !important; }
+.screen[data-screen="home"].is-active .tr-focus { margin:0 0 10px !important; padding:6px 10px 7px 12px !important; }
+.screen[data-screen="home"].is-active .tr-foot { padding-top:10px !important; gap:12px !important; }
+.screen[data-screen="home"].is-active .home-cta { padding:12px 14px !important; margin-bottom:12px !important; }
+.screen[data-screen="home"].is-active .section-head { margin:14px 0 8px !important; font-size:17px !important; }
+.screen[data-screen="home"].is-active .section-sub { margin:0 0 8px !important; }
+.screen[data-screen="home"].is-active .stat-grid { gap:10px !important; margin-bottom:10px !important; }
+.screen[data-screen="home"].is-active .stat-tile { padding:10px !important; }
+.screen[data-screen="home"].is-active .watch-card, .screen[data-screen="home"].is-active .alert-card { padding:12px !important; margin-bottom:10px !important; }
+.screen[data-screen="home"].is-active .home-sec-head .section-head { margin-bottom:4px !important; }
+.screen[data-screen="home"].is-active .home-sec-head .section-sub { margin:0 0 8px !important; }
+/* ==== AI: match standard screen rhythm ==== */
+.screen[data-screen="ai"].is-active { padding-top:14px !important; padding-left:18px !important; padding-right:18px !important; }
+.screen[data-screen="ai"].is-active .ai-hero { padding:10px 12px !important; margin-bottom:8px !important; gap:8px !important; }
+.screen[data-screen="ai"].is-active .ai-hero-emoji { font-size:26px !important; }
+.screen[data-screen="ai"].is-active .ai-hero h2 { font-size:16px !important; }
+.screen[data-screen="ai"].is-active .ai-switch { margin-bottom:8px !important; }
+.screen[data-screen="ai"].is-active .ai-field { padding:6px 10px !important; }
+.screen[data-screen="ai"].is-active .ai-weather { margin:-6px 0 8px !important; padding:6px 10px !important; }
+.screen[data-screen="ai"].is-active .ai-note { margin:-4px 0 8px !important; }
+.screen[data-screen="ai"].is-active .ai-recommend { padding:10px 12px !important; }
+.screen[data-screen="ai"].is-active .ai-recommend + .ai-recommend { margin-top:8px !important; }
+.screen[data-screen="ai"].is-active .ai-text { margin:6px 0 !important; line-height:1.45 !important; }
+.screen[data-screen="ai"].is-active .ai-harvest { margin:8px 0 !important; padding:10px !important; }
+.screen[data-screen="ai"].is-active .disclaimer { margin:8px 0 !important; padding:8px 10px !important; }
+.screen[data-screen="ai"].is-active .ai-actions { margin-top:6px !important; gap:8px !important; }
 
 </style>
 </head>
@@ -4040,7 +4072,30 @@ html, body { background:var(--white) !important; height:auto !important; overflo
     if (brand) brand.hidden = (authScreens.indexOf(name) !== -1);
     updateQuicklaunch(name);
     updateTabbar(name);
+    fitActiveScreen();
   }
+
+  /* ==== AUTO-FIT: scale active screen content to fit phone-screen, no scroll ==== */
+  function fitActiveScreen() {
+    var wrap = document.querySelector(".phone-screen");
+    var active = wrap ? wrap.querySelector(".screen.is-active") : null;
+    if (!wrap || !active) return;
+    active.style.transform = "";
+    var availH = wrap.clientHeight - 78; /* reserve tabbar space */
+    var availW = wrap.clientWidth;
+    var needH = active.scrollHeight;
+    var needW = active.scrollWidth || active.offsetWidth;
+    if (needH > availH && needH > 0) {
+      var s = Math.min(availH / needH, availW / needW, 1);
+      s = Math.max(s, 0.3);
+      var shiftX = (availW - active.offsetWidth * s) / 2;
+      active.style.transform = "translateX(" + shiftX + "px) scale(" + s + ")";
+      active.style.width = availW / s + "px";
+    } else {
+      active.style.width = "";
+    }
+  }
+  window.addEventListener("resize", fitActiveScreen);
 
   /** Show an admin screen by name; hide the rest. */
   function showAdminScreen(name) {
@@ -4943,6 +4998,7 @@ html, body { background:var(--white) !important; height:auto !important; overflo
   // Ensure the initial screen is shown.
   showMobileScreen("login");
   showAdminScreen("admin-login");
+  requestAnimationFrame(function () { fitActiveScreen(); setTimeout(fitActiveScreen, 300); });
 
   // Init the farm weather selector to North by default.
   switchFarm("north");
