@@ -2232,7 +2232,7 @@ h1, h2, h3, h4, h5, h6 {
    screenshot captures the whole view. */
 .phone-screen {
   height:auto !important;
-  min-height:760px !important;
+  min-height:0 !important;
   overflow:visible !important;
 }
 .admin-screen { min-height:0 !important; }
@@ -2488,8 +2488,8 @@ h3 { font-size:19px !important; }
 html, body { background:var(--dew) !important; height:100% !important; overflow:hidden !important; }
 .studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
-.canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:auto !important; max-height:calc(100vh - 24px) !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
-.canvas-wrap.mobile .phone-screen { flex:0 0 auto !important; height:auto !important; min-height:0 !important; max-height:calc(100vh - 120px) !important; overflow:hidden !important; scrollbar-width:none !important; }
+.canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:auto !important; max-height:none !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile .phone-screen { flex:0 0 auto !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; scrollbar-width:none !important; }
 /* Single bottom reserve: phone-screen padding (78px) covers the tabbar, so drop the screen's own 86px. */
 .canvas-wrap.mobile .phone-screen .screen { padding-bottom:16px !important; }
 /* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
@@ -4116,26 +4116,15 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     active.style.width = "";
     active.style.zoom = "";
     var phone = document.querySelector(".canvas-wrap.mobile .phone");
-    var availH = window.innerHeight - 118 - reserve; /* viewport - chrome - tabbar */
     var availW = wrap.clientWidth;
-    // Tall content (>740px incl. tabbar) gets a fixed-height screen + shrink-to-fit.
-    var naturalH = active.scrollHeight + reserve;
-    if (naturalH > 740 && naturalH > 0) {
-      var s = Math.min(740 / naturalH, 1);
-      s = Math.max(s, 0.3);
-      if ("zoom" in active.style) { active.style.zoom = s; }
-      else {
-        active.style.width = availW / s + "px";
-        active.style.transform = "scale(" + s + ")";
-      }
-      wrap.style.height = (740 - 46) + "px"; /* screen minus notch/chrome */
-      if (phone) phone.style.height = "740px";
-    } else {
-      // Short content: hug it, frame shrinks, no dead space at bottom.
-      wrap.style.height = "auto";
-      if (phone) phone.style.height = "auto";
-    }
-    void availH;
+    // Clear forced heights: auto-hug measures true content height.
+    wrap.style.height = "";
+    wrap.style.maxHeight = "";
+    wrap.style.minHeight = "";
+    if (phone) { phone.style.height = ""; }
+    // No inner scroll: content flows full height, frame hugs exactly.
+    wrap.style.overflow = "visible";
+    wrap.style.overflowY = "visible";
   }
   window.addEventListener("resize", fitActiveScreen);
 
