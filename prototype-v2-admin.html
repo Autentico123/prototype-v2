@@ -2448,6 +2448,18 @@ html, body { background:var(--dew) !important; height:100% !important; overflow:
 .canvas-wrap.admin { height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; }
 .admin-canvas { height:100% !important; max-height:100% !important; min-height:0 !important; overflow:hidden !important; display:flex !important; flex-direction:column !important; }
 .admin-main, .admin-screen.is-active { min-height:0 !important; overflow-y:auto !important; scrollbar-width:none !important; }
+.admin-screen.is-active .admin-main { transform-origin:top left !important; }
+/* Tighten dashboard rhythm so all panels visible without scroll on short viewports. */
+.admin-main { padding:20px 24px !important; }
+.admin-topbar { margin-bottom:14px !important; }
+.stat-grid { gap:12px !important; margin-bottom:14px !important; }
+.stat-card { padding:14px !important; }
+.stat-card strong { font-size:30px !important; margin:4px 0 0 !important; }
+.admin-grid { gap:12px !important; }
+.panel { padding:14px !important; }
+.panel-title { margin-bottom:10px !important; }
+.activity { padding:6px 0 !important; }
+.donut { width:100px !important; height:100px !important; margin-bottom:10px !important; }
 /* ==== FIT-CONTENT: shrink active screen so all content fits, no inner scroll ==== */
 .admin-screen.is-active { font-size:13px !important; }
 .admin-screen.is-active h1 { font-size:22px !important; }
@@ -3489,7 +3501,24 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
     var navbar = document.querySelector(".admin-navbar");
     if (navbar) navbar.hidden = (name === "admin-login");
     setQuicklaunch(false);
+    fitAdminScreen();
   }
+
+  /* ==== AUTO-FIT: scale active admin-main so all content fits, no inner scroll ==== */
+  function fitAdminScreen() {
+    var active = document.querySelector(".admin-screen.is-active .admin-main");
+    if (!active) return;
+    active.style.transform = "";
+    active.style.width = "";
+    var needH = active.scrollHeight;
+    var availH = active.clientHeight;
+    if (needH > availH && needH > 0) {
+      var s = Math.max(availH / needH, 0.5);
+      active.style.width = active.clientWidth / s + "px";
+      active.style.transform = "scale(" + s + ")";
+    }
+  }
+  window.addEventListener("resize", fitAdminScreen);
 
   // ---- Quick action hub (docked above the tab bar) ----
   // Screens where the farmer benefits from one-thumb quick actions.
@@ -4400,6 +4429,7 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
   // Ensure the initial screen is shown.
   showMobileScreen("login");
   showAdminScreen("admin-login");
+  requestAnimationFrame(function () { fitAdminScreen(); setTimeout(fitAdminScreen, 300); });
 
   // Init the farm weather selector to North by default.
   switchFarm("north");

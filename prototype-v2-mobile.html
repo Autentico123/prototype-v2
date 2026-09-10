@@ -2488,8 +2488,10 @@ h3 { font-size:19px !important; }
 html, body { background:var(--dew) !important; height:100% !important; overflow:hidden !important; }
 .studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
-.canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:100% !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
+.canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:900px !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; }
+/* Single bottom reserve: phone-screen padding (78px) covers the tabbar, so drop the screen's own 86px. */
+.canvas-wrap.mobile .phone-screen .screen { padding-bottom:16px !important; }
 /* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
 .canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
@@ -4098,8 +4100,12 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var active = wrap ? wrap.querySelector(".screen.is-active") : null;
     if (!wrap || !active) return;
     // Clear stale fit on inactive screens so returning never reuses old scale.
+    // Also zero leftovers (modals, qa-menu) from the old translateX approach.
     wrap.querySelectorAll(".screen").forEach(function (sc) {
       if (sc !== active) { sc.style.transform = ""; sc.style.width = ""; }
+    });
+    document.querySelectorAll(".modal-overlay, .qa-menu").forEach(function (el) {
+      if (el.style.transform) el.style.transform = "";
     });
     // No tabbar on auth screens -> no bottom reserve there.
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
