@@ -2458,6 +2458,13 @@ html, body { background:var(--dew) !important; height:100% !important; overflow:
   .admin-screen.is-active h2 { font-size:15px !important; }
 }
 
+/* ==== PPT MODE: fixed 1920x1080 slide stage, scaled to viewport (?ppt=1 or "p") ==== */
+body.ppt-mode { background:#fff !important; min-height:100vh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
+body.ppt-mode .topbar, body.ppt-mode .canvas-label, body.ppt-mode .footnote { display:none !important; }
+body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background:var(--dew) !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
+body.ppt-mode .canvas-wrap.admin { height:1080px !important; max-height:1080px !important; width:1920px !important; }
+body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !important; }
+
 </style>
 </head>
 <body>
@@ -4370,6 +4377,26 @@ html, body { background:var(--dew) !important; height:100% !important; overflow:
     var empty = document.querySelector("[data-farms-empty]");
     if (empty) empty.classList.toggle("is-hidden", visible !== 0);
   }
+  /* ==== PPT MODE: fixed 1920x1080 stage (?ppt=1 or "p"), scaled to viewport ==== */
+  function pptScale() {
+    var st = document.querySelector(".studio");
+    if (!st || !document.body.classList.contains("ppt-mode")) return;
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    st.style.setProperty("--ppt-scale", s);
+  }
+  function setPpt(on) {
+    document.body.classList.toggle("ppt-mode", on);
+    if (!on) {
+      var st = document.querySelector(".studio");
+      if (st) st.style.removeProperty("--ppt-scale");
+    }
+    pptScale();
+  }
+  if (/(?:\?|&)ppt=1/.test(location.search)) setPpt(true);
+  window.addEventListener("resize", pptScale);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "p" || e.key === "P") setPpt(!document.body.classList.contains("ppt-mode"));
+  });
   // Ensure the initial screen is shown.
   showMobileScreen("login");
   showAdminScreen("admin-login");
