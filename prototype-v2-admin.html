@@ -66,7 +66,13 @@
 
 html, body {
   font-family: var(--font-body);
-  background: linear-gradient(115deg, #2d6a4f 0%, #52b788 100%);
+  background-color: var(--forest-deep);
+  background-image:
+    linear-gradient(115deg, rgba(27, 67, 50, .88) 0%, rgba(45, 106, 79, .72) 100%),
+    url('agrimind_field.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   min-height: 100vh;
   color: var(--forest-deep);
   -webkit-font-smoothing: antialiased;
@@ -1568,7 +1574,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .kb-sub { font-size: 13px; color: var(--stone); margin-top: 4px; max-width: 540px; line-height: 1.5; }
 .kb-top-actions { display: flex; gap: 10px; }
 
-/* ---- RAG pipeline strip ---- */
+/* ---- Rule engine pipeline strip ---- */
 .kb-rag {
   position: relative; overflow: hidden;
   background: linear-gradient(135deg, var(--forest-deep) 0%, #0e2a20 100%);
@@ -2458,7 +2464,7 @@ h3 { font-size:19px !important; }
 /* ==== FIT MODE: console frame, single screen, fits viewport, scroll inside main ==== */
 .topbar, .canvas-label { display:none !important; }
 html { overflow:visible !important; }
-body { background:linear-gradient(115deg, #2d6a4f 0%, #52b788 100%) !important; height:100% !important; overflow:hidden !important; }
+body { background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field.png') !important; background-size:cover !important; background-position:center !important; background-attachment:fixed !important; height:100% !important; overflow:hidden !important; }
 .studio { max-width:none !important; margin:0 !important; padding:0 !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; box-sizing:border-box !important; }
 .canvas-wrap.admin { width:92% !important; max-width:1440px !important; height:auto !important; max-height:none !important; margin:0 auto 40px !important; }
 .admin-canvas { width:100% !important; height:100% !important; display:flex !important; flex-direction:column !important; overflow:visible !important; }
@@ -2526,7 +2532,7 @@ body { background:linear-gradient(115deg, #2d6a4f 0%, #52b788 100%) !important; 
 /* ==== PPT MODE: fixed 1920x1080 slide stage, scaled to viewport (?ppt=1 or "p") ==== */
 body.ppt-mode { background:#fff !important; min-height:100vh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
 body.ppt-mode .topbar, body.ppt-mode .canvas-label, body.ppt-mode .footnote { display:none !important; }
-body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background:linear-gradient(115deg, #2d6a4f 0%, #52b788 100%) !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
+body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field.png') !important; background-size:cover !important; background-position:center !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
 body.ppt-mode .canvas-wrap.admin { height:1080px !important; max-height:1080px !important; width:1920px !important; }
 body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !important; }
 
@@ -3092,10 +3098,10 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
 
             <div class="kb-rag">
               <div class="kb-rag-grid">
-                <div class="kb-rag-tile"><b>318</b><span>chunks indexed</span></div>
-                <div class="kb-rag-tile"><b>e5-small</b><span>384-dim embedding</span></div>
-                <div class="kb-rag-tile"><b>HNSW</b><span>pgvector · top-5</span></div>
-                <div class="kb-rag-tile kb-rag-tile-gold"><b>60%</b><span>confidence cap without a match</span></div>
+                <div class="kb-rag-tile"><b>132</b><span>articles configured</span></div>
+                <div class="kb-rag-tile"><b>Rule Engine</b><span>threshold-based advice</span></div>
+                <div class="kb-rag-tile"><b>crop_type</b><span>+ category lookup</span></div>
+                <div class="kb-rag-tile kb-rag-tile-gold"><b>60%</b><span>confidence cap without an article</span></div>
               </div>
             </div>
 
