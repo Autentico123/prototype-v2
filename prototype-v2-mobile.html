@@ -565,7 +565,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 .modal-overlay.is-open { opacity: 1; visibility: visible; }
 .modal-sheet {
-  width: 88%; max-height: 52vh;
+  width: 88%; max-height: 46vh;
   background: var(--white);
   border-radius: var(--radius-modal);
   border: 2px solid var(--forest);
@@ -581,13 +581,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .modal-sheet::-webkit-scrollbar { width: 0; height: 0; display: none; }
 .modal-overlay.is-open .modal-sheet { transform: translateY(0) scale(1); }
 .modal-grip { width: 36px; height: 4px; background: var(--mist); border-radius: 999px; margin: 0 auto 6px; }
-.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.modal-head h2 { font-family: var(--font-display); font-size: 17px; color: var(--forest-deep); }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+.modal-head h2 { font-family: var(--font-display); font-size: 15px; color: var(--forest-deep); }
 .modal-close {
   background: none; border: none; font-size: 18px; color: var(--subtle); cursor: pointer; padding: 2px;
 }
-.modal-body { display: flex; flex-direction: column; gap: 10px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
+.modal-body { display: flex; flex-direction: column; gap: 7px; }
+.field { display: flex; flex-direction: column; gap: 3px; }
 .field > span { font-size: 11px; font-weight: 700; color: var(--forest-deep); }
 .field em { font-weight: 400; color: var(--subtle); font-style: normal; }
 .field input, .field select, .field textarea {
@@ -2530,7 +2530,7 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 .canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
 /* Modals auto-fit inside the phone frame. */
 .canvas-wrap.mobile .modal-overlay.is-open { align-items:center !important; }
-.canvas-wrap.mobile .modal-overlay.is-open .modal-sheet { max-height:58vh !important; transform-origin:center center !important; }
+.canvas-wrap.mobile .modal-overlay.is-open .modal-sheet { max-height:52vh !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
 .screen[data-screen="home"].is-active { padding-top:14px !important; padding-left:18px !important; padding-right:18px !important; }
 .screen[data-screen="home"].is-active .home-header { margin-bottom:12px !important; }
@@ -4273,27 +4273,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
   /** Open a modal overlay by id. */
   function openModal(id) {
     var el = document.getElementById(id);
-    if (!el) return;
-    el.classList.add("is-open");
-    fitModal(el);
-  }
-
-  /* Shrink an open modal to fit the phone frame, no clipping. */
-  function fitModal(overlay) {
-    var wrap = document.querySelector(".phone-screen");
-    var sheet = overlay ? overlay.querySelector(".modal-sheet") : null;
-    if (!wrap || !sheet) return;
-    sheet.style.transform = "";
-    var availH = wrap.clientHeight - 40;
-    var availW = wrap.clientWidth - 24;
-    var needH = sheet.scrollHeight;
-    var needW = sheet.scrollWidth || sheet.offsetWidth;
-    if (needH > availH && needH > 0) {
-      var m = Math.min(availH / needH, availW / needW, 1);
-      m = Math.max(m, 0.5);
-      sheet.style.transformOrigin = "center center";
-      sheet.style.transform = "scale(" + m + ")";
-    }
+    if (el) el.classList.add("is-open");
   }
 
   /** Fill the shared delete-confirmation modal with context. */
