@@ -565,7 +565,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 .modal-overlay.is-open { opacity: 1; visibility: visible; }
 .modal-sheet {
-  width: 88%; max-height: 60vh;
+  width: 82%; max-height: 60vh;
   background: var(--white);
   border-radius: var(--radius-modal);
   border: 2px solid var(--forest);
@@ -580,19 +580,19 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 /* WebKit (Chrome/Safari): hide scrollbar but keep scroll */
 .modal-sheet::-webkit-scrollbar { width: 0; height: 0; display: none; }
 .modal-overlay.is-open .modal-sheet { transform: translateY(0) scale(1); }
-.modal-grip { width: 32px; height: 3px; background: var(--mist); border-radius: 999px; margin: 0 auto 4px; }
-.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-.modal-head h2 { font-family: var(--font-display); font-size: 13px; color: var(--forest-deep); }
+.modal-grip { width: 28px; height: 3px; background: var(--mist); border-radius: 999px; margin: 0 auto 3px; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px; }
+.modal-head h2 { font-family: var(--font-display); font-size: 11px; color: var(--forest-deep); }
 .modal-close {
-  background: none; border: none; font-size: 15px; color: var(--subtle); cursor: pointer; padding: 1px;
+  background: none; border: none; font-size: 13px; color: var(--subtle); cursor: pointer; padding: 0;
 }
-.modal-body { display: flex; flex-direction: column; gap: 5px; }
-.field { display: flex; flex-direction: column; gap: 2px; }
-.field > span { font-size: 10px; font-weight: 700; color: var(--forest-deep); }
+.modal-body { display: flex; flex-direction: column; gap: 3px; }
+.field { display: flex; flex-direction: column; gap: 1px; }
+.field > span { font-size: 9px; font-weight: 700; color: var(--forest-deep); }
 .field em { font-weight: 400; color: var(--subtle); font-style: normal; }
 .field input, .field select, .field textarea {
-  font-family: var(--font-body); font-size: 11px; color: var(--forest-deep);
-  border: 1.5px solid var(--forest); border-radius: var(--radius-base); padding: 6px 10px;
+  font-family: var(--font-body); font-size: 10px; color: var(--forest-deep);
+  border: 1px solid var(--forest); border-radius: var(--radius-base); padding: 4px 8px;
   background: var(--white); outline: none;
 }
 .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--forest); }
