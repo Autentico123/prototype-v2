@@ -4170,7 +4170,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
     var screenName = active ? active.getAttribute("data-screen") : "";
-    var reserve = tabHidden ? 0 : (screenName === "home" || screenName === "ai" ? 40 : 80);
+    var reserve = tabHidden ? 0 : (screenName === "home" || screenName === "ai" || screenName === "farm-detail" || screenName === "crop-detail" ? 40 : 80);
     // Reset before measuring: stale width inflates offsetWidth and skews shiftX.
     active.style.transform = "";
     active.style.width = "";
