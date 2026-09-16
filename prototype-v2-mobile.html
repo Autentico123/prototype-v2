@@ -775,13 +775,14 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .co-tile span { font-size: 8px; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; }
 
 /* Crop detail compact */
+[data-screen="crop-detail"] .crop-summary { gap:8px; margin-bottom:16px; }
 [data-screen="crop-detail"] .stage-tile,
-[data-screen="crop-detail"] .harvest-tile { padding: 10px 12px; margin-bottom: 10px; }
-[data-screen="crop-detail"] .harvest-progress { margin: -4px 0 10px; }
-[data-screen="crop-detail"] .section-head { margin: 12px 0 8px; font-size: 17px; }
-[data-screen="crop-detail"] .weather-card { padding: 12px; margin-bottom: 10px; }
-[data-screen="crop-detail"] .ai-card { padding: 12px; }
-[data-screen="crop-detail"] .quick-actions { margin-top: 12px; }
+[data-screen="crop-detail"] .harvest-tile { padding: 14px; margin-bottom: 16px; }
+[data-screen="crop-detail"] .harvest-progress { margin: -6px 0 16px; }
+[data-screen="crop-detail"] .section-head { margin: 18px 0 10px; }
+[data-screen="crop-detail"] .weather-card { padding: 14px; margin-bottom: 16px; }
+[data-screen="crop-detail"] .ai-card { padding: 14px; }
+[data-screen="crop-detail"] .quick-actions { margin-top: 18px; margin-bottom: 0; padding-bottom: 0; }
 .co-ok { background: var(--mist); border-color: #a7f3d0; }
 .co-ok b { color: #065f46; }
 .co-warn { background: var(--amber-light); border-color: #fcd34d; }
@@ -4170,7 +4171,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
     var screenName = active ? active.getAttribute("data-screen") : "";
-    var reserve = tabHidden ? 0 : (screenName === "home" || screenName === "ai" || screenName === "farm-detail" || screenName === "crop-detail" ? 40 : 80);
+    var reserve = tabHidden ? 0 : (screenName === "crop-detail" ? 78 : (screenName === "home" || screenName === "ai" || screenName === "farm-detail" ? 40 : 80));
     // Reset before measuring: stale width inflates offsetWidth and skews shiftX.
     active.style.transform = "";
     active.style.width = "";
