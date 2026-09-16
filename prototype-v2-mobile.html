@@ -2519,6 +2519,9 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 .screen[data-screen="ai"].is-active { padding-bottom:0 !important; }
 .screen[data-screen="home"].is-active > :last-child,
 .screen[data-screen="ai"].is-active .ai-actions { margin-bottom:0 !important; padding-bottom:0 !important; }
+/* Crops + Weather: last action clears the tabbar. */
+.screen[data-screen="crops"].is-active,
+.screen[data-screen="weather"].is-active { padding-bottom:80px !important; }
 /* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
 .canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
