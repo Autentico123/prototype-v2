@@ -156,6 +156,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   overflow-y: auto;
   scrollbar-width: none;        /* hide scrollbar (Firefox) */
   -ms-overflow-style: none;     /* IE/Edge */
+  padding-bottom: 76px;
 }
 .phone-screen::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
@@ -772,8 +773,15 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 .co-tile b { display: block; font-family: var(--font-display); font-size: 14px; color: var(--forest-deep); line-height: 1.1; }
 .co-tile span { font-size: 8px; color: var(--stone); text-transform: uppercase; letter-spacing: .04em; }
-/* Crops list: constrain so it doesn't overflow into the bottom nav */
-[data-screen="crops"] { max-height: 520px; overflow-y: auto; padding-bottom: 80px; }
+
+/* Crop detail compact */
+[data-screen="crop-detail"] .stage-tile,
+[data-screen="crop-detail"] .harvest-tile { padding: 10px 12px; margin-bottom: 10px; }
+[data-screen="crop-detail"] .harvest-progress { margin: -4px 0 10px; }
+[data-screen="crop-detail"] .section-head { margin: 12px 0 8px; font-size: 17px; }
+[data-screen="crop-detail"] .weather-card { padding: 12px; margin-bottom: 10px; }
+[data-screen="crop-detail"] .ai-card { padding: 12px; }
+[data-screen="crop-detail"] .quick-actions { margin-top: 12px; }
 .co-ok { background: var(--mist); border-color: #a7f3d0; }
 .co-ok b { color: #065f46; }
 .co-warn { background: var(--amber-light); border-color: #fcd34d; }
@@ -2503,7 +2511,8 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 .studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
 .canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:900px !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
-.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; }
+.canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow-y:auto !important; scrollbar-width:none !important; }
+.canvas-wrap.mobile .phone-screen::-webkit-scrollbar { width:0 !important; height:0 !important; display:none !important; }
 /* Single bottom reserve: phone-screen padding (78px) covers the tabbar, so drop the screen's own 86px. */
 .canvas-wrap.mobile .phone-screen .screen { padding-bottom:16px !important; }
 /* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
@@ -4149,34 +4158,9 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
     var wrap = document.querySelector(".phone-screen");
     var active = wrap ? wrap.querySelector(".screen.is-active") : null;
     if (!wrap || !active) return;
-    // Clear stale fit on inactive screens so returning never reuses old scale.
-    // Also zero leftovers (modals, qa-menu) from the old translateX approach.
-    wrap.querySelectorAll(".screen").forEach(function (sc) {
-      if (sc !== active) { sc.style.transform = ""; sc.style.width = ""; }
-    });
-    document.querySelectorAll(".modal-overlay, .qa-menu").forEach(function (el) {
-      if (el.style.transform) el.style.transform = "";
-    });
-    // No tabbar on auth screens -> no bottom reserve there.
     var tabHidden = !document.querySelector("[data-tabbar].is-visible");
     wrap.classList.toggle("no-tab", tabHidden);
-    var reserve = tabHidden ? 0 : 78;
-    // Reset before measuring: stale width inflates offsetWidth and skews shiftX.
-    active.style.transform = "";
-    active.style.width = "";
-    var availH = wrap.clientHeight - reserve;
-    var availW = wrap.clientWidth;
-    var needH = active.scrollHeight;
-    var needW = active.scrollWidth || active.offsetWidth;
-    if (needH > availH && needH > 0) {
-      var s = Math.min(availH / needH, availW / needW, 1);
-      s = Math.max(s, 0.3);
-      // Width compensation makes scaled width exactly availW, so no shiftX needed.
-      active.style.width = availW / s + "px";
-      active.style.transform = "scale(" + s + ")";
-    } else {
-      active.style.width = "";
-    }
+    wrap.scrollTop = 0;
   }
   window.addEventListener("resize", fitActiveScreen);
 
