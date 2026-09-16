@@ -743,8 +743,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 /* "Use current location" sits just under the map picker. */
 .use-location { margin-top: 8px; }
 
-/* ---- Trash link ---- */
-.trash-link { display: flex; align-items: center; gap: 8px; justify-content: center; margin-top: 16px; font-size: 13px; color: var(--stone); cursor: pointer; }
+/* ---- Trash link (hidden for proposal) ---- */
+.trash-link { display: none !important; }
 .trash-count { background: var(--bg-gray); color: var(--stone); font-size: 11px; padding: 1px 7px; border-radius: 999px; }
 
 /* ---- Crop card ---- */
@@ -779,11 +779,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .co-alert { background: var(--danger-light); border-color: #fca5a5; }
 .co-alert b { color: #991b1b; }
 
-.crop-filters { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.crop-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .crop-filter {
-  flex: 0 0 auto; font-family: var(--font-body); font-size: 12px; font-weight: 700;
+  flex: 0 0 auto; font-family: var(--font-body); font-size: 11px; font-weight: 700;
   background: var(--white); border: 1.5px solid var(--mist); border-radius: 999px;
-  color: var(--stone); padding: 6px 14px; cursor: pointer; white-space: nowrap;
+  color: var(--stone); padding: 5px 10px; cursor: pointer; white-space: nowrap;
   transition: border-color .2s, background .2s, color .2s;
 }
 .crop-filter:hover { border-color: var(--forest); }
@@ -1185,10 +1185,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 
 /* ---- Offline banner ---- */
 .offline-banner {
-  display: flex; align-items: center; gap: 8px;
-  background: var(--amber-light); border: 1px solid var(--amber);
-  color: #92400e; font-size: 12px; border-radius: var(--radius-base);
-  padding: 10px 12px; margin-top: 4px;
+  display: none !important;
 }
 
 /* ---- AI hero + recommendation ---- */
@@ -3294,9 +3291,9 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
           <!-- Filter the list by risk level (client-side; doc 3.x list). -->
           <div class="crop-filters" role="tablist" aria-label="Filter crops by risk">
             <button class="crop-filter is-active" data-crop-filter="all" role="tab" aria-selected="true">All</button>
-            <button class="crop-filter" data-crop-filter="low" role="tab" aria-selected="false"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="4"/></svg> Low</button>
-            <button class="crop-filter" data-crop-filter="moderate" role="tab" aria-selected="false"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="4"/></svg> Moderate</button>
-            <button class="crop-filter" data-crop-filter="high" role="tab" aria-selected="false"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" stroke="none" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="4"/></svg> High</button>
+            <button class="crop-filter" data-crop-filter="low" role="tab" aria-selected="false">Low</button>
+            <button class="crop-filter" data-crop-filter="moderate" role="tab" aria-selected="false">Moderate</button>
+            <button class="crop-filter" data-crop-filter="high" role="tab" aria-selected="false">High</button>
           </div>
 
           <div class="crop-card" data-farm-panel="north" data-crop-risk="high" data-nav="crop-detail">
@@ -3866,7 +3863,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
             <span><b>18</b>km/h wind</span>
           </div>
 
-          <div class="alert-actions">
+          <div class="alert-actions" style="display:none">
             <button class="btn btn-gold btn-block" data-nav="ai"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="6" width="10" height="7" rx="1.5"/><path d="M8 6V3"/><circle cx="8" cy="3" r="1"/><circle cx="6" cy="9.5" r=".6" fill="currentColor"/><circle cx="10" cy="9.5" r=".6" fill="currentColor"/></svg> Get AI Advice</button>
           </div>
         </section>
