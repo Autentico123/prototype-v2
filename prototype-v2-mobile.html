@@ -565,7 +565,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 }
 .modal-overlay.is-open { opacity: 1; visibility: visible; }
 .modal-sheet {
-  width: 88%; max-height: none; height: auto;
+  width: 88%; max-height: 60vh;
   background: var(--white);
   border-radius: var(--radius-modal);
   border: 2px solid var(--forest);
@@ -2531,7 +2531,7 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 /* Modals auto-fit inside the phone frame. */
 .canvas-wrap.mobile .modal-overlay.is-open { align-items:center !important; }
 .canvas-wrap.mobile .modal-overlay.is-open { align-items:flex-end !important; padding-bottom:70px !important; }
-.canvas-wrap.mobile .modal-overlay.is-open .modal-sheet { max-height:none !important; height:auto !important; }
+.canvas-wrap.mobile .modal-overlay.is-open .modal-sheet { max-height:60vh !important; overflow-y:auto !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
 .screen[data-screen="home"].is-active { padding-top:14px !important; padding-left:18px !important; padding-right:18px !important; }
 .screen[data-screen="home"].is-active .home-header { margin-bottom:12px !important; }
