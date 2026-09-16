@@ -2512,8 +2512,11 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
 .canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:900px !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile .phone-screen { flex:1 1 auto !important; height:auto !important; min-height:0 !important; max-height:100% !important; overflow:hidden !important; scrollbar-width:none !important; }
-/* Single bottom reserve: phone-screen padding (78px) covers the tabbar, so drop the screen's own 86px. */
-.canvas-wrap.mobile .phone-screen .screen { padding-bottom:16px !important; }
+/* Bottom reserve: keep last card clear of the tabbar without leaving a gap. */
+.canvas-wrap.mobile .phone-screen .screen { padding-bottom:4px !important; }
+/* Home + AI: content should end flush at the bottom nav, no extra space. */
+.screen[data-screen="home"].is-active > :last-child,
+.screen[data-screen="ai"].is-active .ai-actions { margin-bottom:0 !important; }
 /* ==== AUTO-FIT: JS scales active screen to fit, zero scroll ==== */
 .canvas-wrap.mobile .phone-screen .screen.is-active { transform-origin:top left !important; }
 /* ==== HOME: match standard screen rhythm (14/18px) ==== */
