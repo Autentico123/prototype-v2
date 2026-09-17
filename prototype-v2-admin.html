@@ -442,18 +442,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .home-sec-head .section-head { margin-bottom: 4px; }
 .home-sec-head .section-sub { margin: 0 0 10px; }
 
-/* ---- Home crop watchlist: ranked + focus ---- */
-.watch-card { position: relative; padding-left: 48px; min-height: 44px; }
-.wc-rank {
-  position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-  width: 24px; height: 24px; border-radius: 50%;
-  display: grid; place-items: center;
-  font-family: var(--font-display); font-size: 13px; font-weight: 700;
-  background: var(--mist); color: var(--forest); transition: background .2s, color .2s;
-}
+/* ---- Home crop watchlist ---- */
+.watch-card { position: relative; }
 .watch-card.is-focus { border-left: 4px solid var(--gold); }
-.watch-card.is-focus .wc-rank { background: var(--gold); color: var(--forest-deep); }
-.watch-card:hover .wc-rank { background: var(--leaf); color: var(--white); }
 /* Risk badge first, health second — two distinct fields, never conflated. */
 .wc-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
@@ -1055,15 +1046,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .ai-card p { font-size: 13px; color: var(--forest-deep); margin: 8px 0; line-height: 1.5; }
 .ai-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--subtle); }
 .ai-meta .conf b { color: var(--violet); }
-
-/* Inline confidence bar (doc 5.3 · 0–100%). Width set per-card via --c;
-   the fill color steps down as confidence drops below the 60% threshold. */
-.conf-bar {
-  flex: 1; height: 6px; border-radius: 999px; background: rgba(124,58,237,.14);
-  overflow: hidden; max-width: 120px;
-}
-.conf-bar i { display: block; height: 100%; width: var(--c, 0%); border-radius: 999px; background: var(--violet); }
-.ai-recommend.is-low .conf-bar i { background: var(--amber); }
 
 /* ---- Quick actions ---- */
 .quick-actions { display: flex; gap: 10px; margin-top: 18px; }
@@ -2076,10 +2058,10 @@ div[style*="border-radius:50%"] { border-radius:50% !important; }
 
 /* …but keep genuinely circular elements round (avatars, dots, toggles, donut) */
 .ph-brand-avatar, .avatar, .back-btn, .refresh-btn, .tr-glow, .tr-live::before,
-.wc-rank, .rec-icon, .crop-status i, .auth-orb, .profile-avatar, .alert-read,
+.rec-icon, .crop-status i, .auth-orb, .profile-avatar, .alert-read,
 .an-bell, .an-avatar, .admin-avatar, .stat-card::after, .donut, .donut::before,
 .mini-avatar, .kb-rag-status i, .user-toggle span, .gazette-airing-dot,
-.announce-chip i, .qa-hub, .qa-hub::after, .qa-ico, .conf-bar, .conf-bar i {
+.announce-chip i, .qa-hub, .qa-hub::after, .qa-ico {
   border-radius:50% !important;
 }
 /* toggle track stays a full pill (round ends, not a circle) */
@@ -2118,8 +2100,8 @@ h1, h2, h3, h4, h5, h6 {
 .farm-card, .weather-card, .table-card, .ai-recommend, .modal-sheet,
 .harvest-tile, .stat-tile, .weather-hero, .forecast, .forecast-day,
 .offline-banner, .admin-topbar, .watch-card, .today-report, .fd-notif,
-.rec-item, .rec-icon, .wc-rank, .kb-pill, .crop-filter, .ur-tab,
-.qa-chip, .an-bell, .hp-track, .crop-status i, .conf-bar,
+.rec-item, .rec-icon, .kb-pill, .crop-filter, .ur-tab,
+.qa-chip, .an-bell, .hp-track, .crop-status i,
 .card-action, .rec-act, .back-btn, .refresh-btn {
   background:var(--white) !important;
   background-color:var(--white) !important;
@@ -2169,7 +2151,7 @@ h1, h2, h3, h4, h5, h6 {
 [data-screen="weather"] .stat-tile, [data-screen="weather"] .panel,
 .fd-select { border:2px solid var(--sky) !important; }
 
-.ai-recommend, .conf-bar, .badge-violet,
+.ai-recommend, .badge-violet,
 [data-screen="ai"] .stat-tile, [data-screen="ai"] .panel {
   border:2px solid var(--violet) !important;
 }
@@ -2290,7 +2272,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small colored dots/markers keep their color as a border+ring, not a fill */
-.crop-status i, .conf-bar i, .gazette-airing-dot, .announce-chip i {
+.crop-status i, .gazette-airing-dot, .announce-chip i {
   background:transparent !important;
   border:2px solid currentColor !important;
 }
@@ -2673,7 +2655,6 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
 
 /* Descendant hover nudges */
 .today-report:hover .tr-cta i { transform: none !important; }
-.watch-card:hover .wc-rank { background: var(--white) !important; color: var(--forest) !important; }
 
 /* Round icon buttons: resting fills (V2 skin gives them white fills) */
 .back-btn:hover { background: var(--white) !important; }

@@ -1074,14 +1074,64 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .ai-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--subtle); }
 .ai-meta .conf b { color: var(--violet); }
 
-/* Inline confidence bar (doc 5.3 · 0–100%). Width set per-card via --c;
-   the fill color steps down as confidence drops below the 60% threshold. */
-.conf-bar {
-  flex: 1; height: 6px; border-radius: 999px; background: rgba(124,58,237,.14);
-  overflow: hidden; max-width: 120px;
+/* Confidence read-out (doc 5.3 · 0–100%). A dedicated panel at the foot of each
+   recommendation card: tier chip + percentage on the left, full-width meter below
+   with a tick at the 60% honesty threshold. Width set per-card via --c; the fill
+   color follows the tier — violet (high) / gold (medium) / amber (low). */
+.conf-block {
+  margin-top: 9px; padding: 8px 10px;
+  border: 1px solid rgba(124,58,237,.30);
+  border-left: 3px solid var(--violet);
+  border-radius: var(--radius-sm);
+  background: rgba(124,58,237,.06);
 }
-.conf-bar i { display: block; height: 100%; width: var(--c, 0%); border-radius: 999px; background: var(--violet); }
-.ai-recommend.is-low .conf-bar i { background: var(--amber); }
+.conf-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.conf-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 9px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+  color: var(--violet); border: 1.5px solid var(--violet-mid); border-radius: 999px;
+  padding: 2px 9px; white-space: nowrap;
+}
+.conf-chip::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: currentColor; flex: none;
+}
+.conf-val { font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--violet); letter-spacing: -.2px; }
+.conf-track {
+  position: relative; height: 7px; margin-top: 7px;
+  background: rgba(124,58,237,.14); border-radius: 999px; overflow: visible;
+}
+.conf-track i {
+  display: block; height: 100%; width: var(--c, 0%);
+  background: linear-gradient(90deg, var(--violet-mid), var(--violet));
+  border-radius: 999px;
+}
+/* Honesty threshold: advice below 60% must tell the farmer to consult a
+   local agriculturist — mark that line on every meter. */
+.conf-threshold {
+  position: absolute; top: -2px; bottom: -2px; left: 60%;
+  width: 2px; border-radius: 1px; background: rgba(27,67,50,.28);
+}
+.conf-legend {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 5px; font-size: 9px; font-weight: 700;
+  letter-spacing: .5px; text-transform: uppercase; color: var(--subtle);
+}
+.conf-legend .cl-mid { color: var(--violet-mid); }
+
+/* Medium tier (60–79%): gold fills and accents, same structure. */
+.ai-recommend.tier-mid .conf-block { border-color: rgba(202,138,4,.35); border-left-color: var(--gold); background: rgba(202,138,4,.07); }
+.ai-recommend.tier-mid .conf-chip, .ai-recommend.tier-mid .conf-val { color: var(--gold-deep); }
+.ai-recommend.tier-mid .conf-chip { border-color: var(--gold); }
+.ai-recommend.tier-mid .conf-track { background: rgba(202,138,4,.16); }
+.ai-recommend.tier-mid .conf-track i { background: linear-gradient(90deg, var(--gold), var(--gold-deep)); }
+
+/* Low tier (<60%, doc 5.3): amber + the consult disclaimer is shown on the card. */
+.ai-recommend.is-low .conf-block { border-color: rgba(180,83,9,.35); border-left-color: var(--amber); background: rgba(180,83,9,.07); }
+.ai-recommend.is-low .conf-chip, .ai-recommend.is-low .conf-val { color: #92400e; }
+.ai-recommend.is-low .conf-chip { border-color: var(--amber); }
+.ai-recommend.is-low .conf-track { background: rgba(180,83,9,.16); }
+.ai-recommend.is-low .conf-track i { background: linear-gradient(90deg, var(--amber), #92400e); }
 
 /* ---- Quick actions ---- */
 .quick-actions { display: flex; gap: 10px; margin-top: 18px; }
@@ -1290,6 +1340,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
 .screen[data-screen="ai"] .ai-recommend + .ai-recommend { margin-top: 8px; }
 .screen[data-screen="ai"] .ai-text { font-size: 12.5px; line-height: 1.45; margin: 6px 0; }
 .screen[data-screen="ai"] .ai-meta { font-size: 10.5px; }
+.screen[data-screen="ai"] .conf-block { margin-top: 7px; padding: 6px 9px; }
+.screen[data-screen="ai"] .conf-track { height: 6px; margin-top: 5px; }
+.screen[data-screen="ai"] .conf-val { font-size: 13.5px; }
+.screen[data-screen="ai"] .conf-chip { font-size: 8.5px; padding: 1.5px 8px; }
+.screen[data-screen="ai"] .conf-legend { font-size: 8.5px; margin-top: 4px; }
 .screen[data-screen="ai"] .ai-why { margin-top: 6px; font-size: 11.5px; }
 .screen[data-screen="ai"] .ai-disc { margin-top: 6px; padding: 6px 8px; }
 .screen[data-screen="ai"] .ai-harvest { margin: 10px 0; padding: 12px; }
@@ -2093,10 +2148,10 @@ div[style*="border-radius:50%"] { border-radius:50% !important; }
 
 /* …but keep genuinely circular elements round (avatars, dots, toggles, donut) */
 .ph-brand-avatar, .avatar, .back-btn, .refresh-btn, .tr-glow, .tr-live::before,
-.wc-rank, .rec-icon, .crop-status i, .auth-orb, .profile-avatar, .alert-read,
+.rec-icon, .crop-status i, .auth-orb, .profile-avatar, .alert-read,
 .an-bell, .an-avatar, .admin-avatar, .stat-card::after, .donut, .donut::before,
 .mini-avatar, .kb-rag-status i, .user-toggle span, .gazette-airing-dot,
-.announce-chip i, .qa-hub, .qa-hub::after, .qa-ico, .conf-bar, .conf-bar i {
+.announce-chip i, .qa-hub, .qa-hub::after, .qa-ico {
   border-radius:50% !important;
 }
 /* toggle track stays a full pill (round ends, not a circle) */
@@ -2135,8 +2190,8 @@ h1, h2, h3, h4, h5, h6 {
 .farm-card, .weather-card, .table-card, .ai-recommend, .modal-sheet,
 .harvest-tile, .stat-tile, .weather-hero, .forecast, .forecast-day,
 .offline-banner, .admin-topbar, .watch-card, .today-report, .fd-notif,
-.rec-item, .rec-icon, .wc-rank, .kb-pill, .crop-filter, .ur-tab,
-.qa-chip, .an-bell, .hp-track, .crop-status i, .conf-bar,
+.rec-item, .rec-icon, .kb-pill, .crop-filter, .ur-tab,
+.qa-chip, .an-bell, .hp-track, .crop-status i,
 .card-action, .rec-act, .back-btn, .refresh-btn {
   background:var(--white) !important;
   background-color:var(--white) !important;
@@ -2186,7 +2241,7 @@ h1, h2, h3, h4, h5, h6 {
 [data-screen="weather"] .stat-tile, [data-screen="weather"] .panel,
 .fd-select { border:2px solid var(--sky) !important; }
 
-.ai-recommend, .conf-bar, .badge-violet,
+.ai-recommend, .badge-violet,
 [data-screen="ai"] .stat-tile, [data-screen="ai"] .panel {
   border:2px solid var(--violet) !important;
 }
@@ -2307,7 +2362,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Small colored dots/markers keep their color as a border+ring, not a fill */
-.crop-status i, .conf-bar i, .gazette-airing-dot, .announce-chip i {
+.crop-status i, .gazette-airing-dot, .announce-chip i {
   background:transparent !important;
   border:2px solid currentColor !important;
 }
@@ -3902,10 +3957,14 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
           <div class="ai-recommend" data-ai-card="irrigation">
             <span class="ai-label" data-ai-label><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="6" width="10" height="7" rx="1.5"/><path d="M8 6V3"/><circle cx="8" cy="3" r="1"/><circle cx="6" cy="9.5" r=".6" fill="currentColor"/><circle cx="10" cy="9.5" r=".6" fill="currentColor"/></svg> <svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z"/></svg> IRRIGATION</span>
             <p class="ai-text" data-ai-text>Malakas ang ulan bukas (90%). Ipahinto ang pagdidilig ngayon at bantayan ang kahalumigmigan ng lupa pagkatapos ng ulan.</p>
-            <div class="ai-meta">
-              <span class="conf">Confidence <b data-ai-conf>92%</b></span>
-              <span class="conf-bar"><i style="--c:92%"></i></span>
-              <span data-ai-time>Jul 27 · 8:00 AM</span>
+            <div class="ai-meta"><span data-ai-time>Jul 27 · 8:00 AM</span></div>
+            <div class="conf-block">
+              <div class="conf-top">
+                <span class="conf-chip" data-ai-conf-tier>High confidence</span>
+                <span class="conf-val" data-ai-conf-val>92%</span>
+              </div>
+              <div class="conf-track" role="img" aria-label="Confidence meter at 92 percent of 100"><i style="--c:92%"></i><span class="conf-threshold"></span></div>
+              <div class="conf-legend"><span>0%</span><span class="cl-mid">60% honesty threshold</span><span>100%</span></div>
             </div>
             <button class="ai-why" data-toggle-reason>Why? <span>▾</span></button>
             <div class="ai-reason"><span data-ai-reason>Rain probability 90% (High) · crop at Vegetative stage, drainage-sensitive · no pending nutrient topdressing</span></div>
@@ -3915,10 +3974,14 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
           <div class="ai-recommend" data-ai-card="fertilizer">
             <span class="ai-label" data-ai-label><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M13 3C6 3 3 7 3 13c6 0 10-3 10-10z"/><path d="M6 10c2-1 4-3 5-5"/></svg> FERTILIZER</span>
             <p class="ai-text" data-ai-text>Delay urea up to 3 days. Heavy rain will leach nitrogen; resume once drained.</p>
-            <div class="ai-meta">
-              <span class="conf">Confidence <b data-ai-conf>88%</b></span>
-              <span class="conf-bar"><i style="--c:88%"></i></span>
-              <span data-ai-time>Jul 27 · 7:50 AM</span>
+            <div class="ai-meta"><span data-ai-time>Jul 27 · 7:50 AM</span></div>
+            <div class="conf-block">
+              <div class="conf-top">
+                <span class="conf-chip" data-ai-conf-tier>High confidence</span>
+                <span class="conf-val" data-ai-conf-val>88%</span>
+              </div>
+              <div class="conf-track" role="img" aria-label="Confidence meter at 88 percent of 100"><i style="--c:88%"></i><span class="conf-threshold"></span></div>
+              <div class="conf-legend"><span>0%</span><span class="cl-mid">60% honesty threshold</span><span>100%</span></div>
             </div>
             <button class="ai-why" data-toggle-reason>Why? <span>▾</span></button>
             <div class="ai-reason"><span data-ai-reason>Urea window open · rain leaches N</span></div>
@@ -4792,8 +4855,21 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
       if (q) q.textContent = t.label;
       var tx = card.querySelector("[data-ai-text]");
       if (tx) tx.textContent = rec.text;
+      // Confidence read-out: value, meter fill and tier chip all stay in sync
+      // (doc 5.3 — caps at 60% without a KB article, 55% without weather data).
       var c = card.querySelector("[data-ai-conf]");
       if (c) c.textContent = rec.conf + "%";
+      var cv = card.querySelector("[data-ai-conf-val]");
+      if (cv) cv.textContent = rec.conf + "%";
+      var track = card.querySelector(".conf-track");
+      if (track) {
+        track.style.setProperty("--c", rec.conf + "%");
+        track.setAttribute("aria-label", "Confidence meter at " + rec.conf + " percent of 100");
+      }
+      var tier = card.querySelector("[data-ai-conf-tier]");
+      if (tier) tier.textContent = rec.conf >= 80 ? "High confidence" : (rec.conf >= 60 ? "Medium confidence" : "Low confidence");
+      card.classList.toggle("tier-mid", rec.conf >= 60 && rec.conf < 80);
+      card.classList.toggle("is-low", rec.conf < 60);
       var tm = card.querySelector("[data-ai-time]");
       if (tm) tm.textContent = rec.time;
       var r = card.querySelector("[data-ai-reason]");
