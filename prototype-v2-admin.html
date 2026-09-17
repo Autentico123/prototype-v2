@@ -67,12 +67,6 @@
 html, body {
   font-family: var(--font-body);
   background-color: var(--forest-deep);
-  background-image:
-    linear-gradient(115deg, rgba(27, 67, 50, .88) 0%, rgba(45, 106, 79, .72) 100%),
-    url('agrimind_field.png');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   min-height: 100vh;
   color: var(--forest-deep);
   -webkit-font-smoothing: antialiased;
@@ -80,6 +74,22 @@ html, body {
   -ms-overflow-style: none;
 }
 html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* ---- Zoomed background layer ----
+   The field photo is scaled up ~12% and cropped (extra at the bottom)
+   so the stock watermark near the image's bottom edge is pushed out of
+   view. Painted behind all content; gradient overlay keeps it dark. */
+.bg-zoom {
+  position: fixed;
+  inset: -7% -7% -12% -7%;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(115deg, rgba(27, 67, 50, .88) 0%, rgba(45, 106, 79, .72) 100%),
+    url('agrimind_field.png');
+  background-size: cover;
+  background-position: center;
+}
 
 /* Hide scrollbars on all scrolling admin panels (keep scroll capability). */
 .admin-screen,
@@ -2548,7 +2558,9 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
   overflow: hidden !important;
 }
 
-/* ---- Prototype label (top of admin, different from mobile) ---- */
+/* ---- Prototype label (top of admin, different from mobile) ----
+   Screen-indicator card: live-dot badge, icon tile, current screen name
+   (updated by JS per screen), and stack tags. */
 .prototype-label {
   position: fixed;
   top: 12px;
@@ -2557,18 +2569,20 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: auto;
-  padding: 12px 16px;
+  padding: 7px 14px;
   background: var(--white);
   border: 2px solid var(--forest);
   border-bottom: 6px solid var(--gold);
   z-index: 100;
   pointer-events: none;
-  box-shadow: 0 8px 30px rgba(27, 67, 50, .12);
+  box-shadow: 0 12px 34px rgba(27, 67, 50, .16) !important;
 }
 .pl-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.5px;
@@ -2578,44 +2592,171 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
   padding: 4px 12px;
   flex-shrink: 0;
 }
+.pl-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50% !important;
+  background: var(--forest);
+}
 .pl-icon {
-  font-size: 22px;
-  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: var(--forest);
+  background: var(--mist);
+  border: 1.5px solid var(--leaf);
   flex-shrink: 0;
+}
+.pl-screen-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
 }
 .pl-title {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--forest-deep);
-  line-height: 1.2;
+  line-height: 1.15;
   white-space: nowrap;
-}
-.pl-divider {
-  width: 2px;
-  height: 22px;
-  background: var(--forest);
-  flex-shrink: 0;
-}
-.pl-sub {
-  font-size: 12px;
-  color: var(--stone);
-  font-weight: 600;
+}.pl-sub {
+  font-size: 9px;
+  color: var(--leaf);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .pl-note {
   display: none;
 }
-.pl-tags {
-  display: none;
+
+/* =========================================================
+   STATIC PROTOTYPE MODE
+   This is a design prototype, not a live app — disable all
+   keyframe animations and transitions so every screen renders
+   in a fixed, static state (no entrance motion, no pulses,
+   no spins, no floating elements). Hover/focus still works.
+   ========================================================= */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
 }
-.pl-tag {
-  display: none;
+
+/* =========================================================
+   NO-HOVER MODE
+   A prototype should not change appearance on hover. Every
+   :hover / :active visual state is pinned back to the element's
+   resting style. Selected states (.is-active, .is-open,
+   .is-read) are explicitly preserved.
+   ========================================================= */
+
+/* Motion + elevation on hover/press */
+.ph-brand-avatar:hover, .back-btn:hover, .refresh-btn:hover,
+.lang-opt:hover, .watch-card:hover, .today-report:hover,
+.home-cta:hover, .farm-card:hover, .crop-card:hover,
+.weather-card:hover, .ai-card:hover, .alert-card:hover,
+.stat-card:hover, .kb-card:hover, .notice-card:hover,
+.fd-notif:hover, .btn:hover, .qa-hub:hover,
+.btn:active, .today-report:active, .home-cta:active,
+.an-bell:active, .an-user:active, .qa-hub:active {
+  transform: none !important;
+  box-shadow: none !important;
 }
+.home-cta:hover { filter: none !important; }
+
+/* Descendant hover nudges */
+.today-report:hover .tr-cta i { transform: none !important; }
+.watch-card:hover .wc-rank { background: var(--white) !important; color: var(--forest) !important; }
+
+/* Round icon buttons: resting fills (V2 skin gives them white fills) */
+.back-btn:hover { background: var(--white) !important; }
+.alert-card:not(.is-read) .alert-read:hover {
+  background: var(--mist) !important;
+  color: #065f46 !important;
+  transform: none !important;
+}
+.alert-card.is-read .alert-read:hover {
+  background: var(--leaf) !important;
+  color: var(--white) !important;
+}
+
+/* Cards / interactive rows: pin hover border to each element's RESTING
+   border (the V2 skin sets most card borders to 2px forest), so nothing
+   shifts color on hover. */
+.farm-selector:hover, .alert-history-link:hover, .card-action:hover {
+  border-color: var(--mist) !important;
+  background: var(--white) !important;
+}
+.farm-card:hover, .watch-card:hover,
+.crop-filter:not(.is-active):hover, .kb-pill:not(.is-active):hover {
+  border-color: var(--forest) !important;
+  background: var(--white) !important;
+}
+.kb-pill:not(.is-active):hover { color: var(--stone) !important; }
+.rec-act:hover, .rec-act.del:hover {
+  border-color: var(--mist) !important;
+  background: var(--white) !important;
+}
+.rec-act.del:hover, .card-action.del:hover { color: var(--danger) !important; }
+
+/* Buttons: resting colors */
+.btn-danger:hover {
+  background: var(--danger) !important;
+  border-color: var(--danger) !important;
+  color: var(--white) !important;
+}
+.btn-danger-outline:hover {
+  background: var(--white) !important;
+  border-color: var(--danger) !important;
+  color: var(--danger) !important;
+}
+
+/* Small controls + text links */
+.aw-all:hover { color: var(--forest) !important; }
+.fi-eye:hover { opacity: .6 !important; }
+.btn-icon:hover { background: transparent !important; }
+.auth-link-sm:hover, .auth-link:hover, .auth-link-inline:hover { text-decoration: none !important; }
+.auth-link-inline:hover { color: var(--forest) !important; }
+
+/* Navbar identity chip + dropdowns + bell */
+.an-bell:hover { background: rgba(255,255,255,.08) !important; }
+.an-notif:hover, .an-notif-more:hover, .an-menu-item:hover { background: transparent !important; }
+.an-user:hover {
+  border-color: rgba(255,255,255,.22) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+
+/* Admin sidebar: keep the active section highlighted, no hover shift */
+.admin-nav-item:not(.is-active):hover {
+  background: transparent !important;
+  color: rgba(255,255,255,.9) !important;
+}
+.admin-nav-item.is-active:hover {
+  background: var(--forest-deep) !important;
+  color: var(--white) !important;
+}
+
+/* Quick-launch chips: resting forest border + white fill */
+.qa-chip:not(.is-active):hover,
+.qa-chip.is-active:hover {
+  border-color: var(--forest) !important;
+  background: var(--white) !important;
+}
+.qa-chip:hover .qa-ico { background: var(--white) !important; border-color: var(--mist) !important; }
 
 </style>
 </head>
 <body>
+
+<!-- Zoomed field-photo background (hides bottom watermark) -->
+<div class="bg-zoom" aria-hidden="true"></div>
 
 <!-- PPT divider decorations -->
 <div style="position:fixed;top:-100px;right:-80px;width:400px;height:400px;border-radius:50%;background:rgba(149,213,178,.5);pointer-events:none;z-index:0;"></div>
@@ -2648,10 +2789,11 @@ body.ppt-mode .admin-canvas { height:1024px !important; max-height:1024px !impor
 
   <div class="prototype-label">
     <span class="pl-badge">PROTOTYPE</span>
-    <span class="pl-icon">🖥️</span>
-    <span class="pl-title">Admin Login</span>
-    <span class="pl-divider"></span>
-    <span class="pl-sub">Interactive click-through demo — not a live application.</span>
+    <span class="pl-icon" aria-hidden="true"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="3" width="12" height="8" rx="1"/><path d="M6 14h4M8 11v3"/></svg></span>
+    <div class="pl-screen-info">
+      <span class="pl-title">Admin Login</span>
+      <span class="pl-sub">Web Admin Dashboard</span>
+    </div>
   </div>
     <div class="canvas-label">
       <span class="canvas-title"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="3" width="12" height="8" rx="1"/><path d="M6 14h4M8 11v3"/></svg> Admin Dashboard</span>
