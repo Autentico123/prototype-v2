@@ -86,7 +86,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar { width: 0; height: 0; display:
   pointer-events: none;
   background-image:
     linear-gradient(115deg, rgba(27, 67, 50, .88) 0%, rgba(45, 106, 79, .72) 100%),
-    url('agrimind_field.png');
+    url('agrimind_field1.png');
   background-size: cover;
   background-position: center;
 }
@@ -2582,7 +2582,7 @@ h3 { font-size:19px !important; }
 /* ==== FIT MODE: phone frame kept, single screen, fits viewport, no page scroll ==== */
 .topbar, .canvas-label { display:none !important; }
 html { overflow:visible !important; }
-body { background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field.png') !important; background-size:cover !important; background-position:center !important; background-attachment:fixed !important; height:100% !important; overflow:hidden !important; }
+body { background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field1.png') !important; background-size:cover !important; background-position:center !important; background-attachment:fixed !important; height:100% !important; overflow:hidden !important; }
 .studio { max-width:none !important; margin:0 !important; padding:12px !important; gap:0 !important; height:100vh !important; max-height:100vh !important; overflow:hidden !important; display:flex !important; align-items:center !important; justify-content:center !important; box-sizing:border-box !important; }
 .canvas-wrap.mobile { display:flex !important; justify-content:center !important; align-items:center !important; height:calc(100vh - 24px) !important; max-height:calc(100vh - 24px) !important; width:100% !important; }
 .canvas-wrap.mobile .phone { margin:0 auto !important; width:340px !important; max-width:340px !important; padding:12px !important; padding-bottom:20px !important; border-radius:60px !important; height:100% !important; max-height:900px !important; display:flex !important; flex-direction:column !important; box-sizing:border-box !important; }
@@ -2638,7 +2638,7 @@ body { background-color:#1b4332 !important; background-image:linear-gradient(115
 /* ==== PPT MODE: fixed 1920x1080 slide stage, scaled to viewport (?ppt=1 or "p") ==== */
 body.ppt-mode { background:#fff !important; min-height:100vh !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:hidden !important; }
 body.ppt-mode .topbar, body.ppt-mode .canvas-label, body.ppt-mode .footnote { display:none !important; }
-body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field.png') !important; background-size:cover !important; background-position:center !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
+body.ppt-mode .studio { width:1920px !important; height:1080px !important; min-height:1080px !important; max-height:1080px !important; margin:0 !important; padding:0 !important; gap:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; flex:none !important; background-color:#1b4332 !important; background-image:linear-gradient(115deg, rgba(27,67,50,.88) 0%, rgba(45,106,79,.72) 100%), url('agrimind_field1.png') !important; background-size:cover !important; background-position:center !important; transform:scale(var(--ppt-scale, 1)) !important; transform-origin:center center !important; }
 body.ppt-mode .canvas-wrap.mobile { height:1080px !important; max-height:1080px !important; width:1920px !important; }
 body.ppt-mode .canvas-wrap.mobile .phone { width:340px !important; max-width:340px !important; height:1024px !important; max-height:1024px !important; }
 /* No tabbar on auth screens -> drop bottom reserve so login/register/forgot reach bottom. */
@@ -3635,7 +3635,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
           <h2 class="section-head">Latest AI Recommendation</h2>
           <div class="ai-card" data-nav="ai">
             <span class="ai-label"><svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="6" width="10" height="7" rx="1.5"/><path d="M8 6V3"/><circle cx="8" cy="3" r="1"/><circle cx="6" cy="9.5" r=".6" fill="currentColor"/><circle cx="10" cy="9.5" r=".6" fill="currentColor"/></svg> <svg class="ic" viewBox="0 0 16 16" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2s4 5 4 8a4 4 0 0 1-8 0c0-3 4-8 4-8z"/></svg> IRRIGATION</span>
-            <p>Rain is expected tomorrow (90%). Skip irrigation today and monitor soil moisture after rainfall before irrigating again.</p>
+            <p>Rain is expected tomorrow. Skip irrigation today to avoid waterlogging.</p>
             <div class="ai-meta">
               <span class="conf">Confidence <b>92%</b></span>
               <span class="time">Jul 27 · 8:00 AM</span>
@@ -4755,7 +4755,7 @@ body.ppt-mode .screen[data-screen="ai"].is-active .disclaimer { margin:6px 0 !im
       Rice: {
         emoji: "", stage: "Vegetative · Day 12", risk: "high", riskText: "High Risk", health: "ok", healthText: "Healthy",
         recs: {
-          irrigation: { text: "Rain 90% tomorrow. Pause watering and check soil moisture after the rain.", conf: 92, time: "Jul 27 · 8:00 AM", reason: "Rain 90% · drainage-sensitive stage" },
+          irrigation: { text: "Rain is expected tomorrow. Skip irrigation today to avoid waterlogging.", conf: 92, time: "Jul 27 · 8:00 AM", reason: "Rain 90% · drainage-sensitive stage" },
           fertilizer: { text: "Delay urea up to 3 days. Heavy rain will leach nitrogen; resume once drained.", conf: 88, time: "Jul 27 · 7:50 AM", reason: "Urea window open · rain leaches N" }
         },
         harvest: { date: "October 15, 2026", note: "Weather-adjusted · ~115 days", yield: "Est. 4.2 t/ha" }
